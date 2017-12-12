@@ -1,3 +1,5 @@
+[![iOS Messenger](http://relatedcode.com/github/header13.png)](http://github.com/relatedcode/Messenger)
+
 ## OVERVIEW
 
 RCMessageKit is a light-weight and easy-to-use Chat user interface framework for iOS.
