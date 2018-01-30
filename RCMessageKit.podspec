@@ -10,4 +10,5 @@ Pod::Spec.new do |s|
   s.source_files = 'RCMessageKit/**/*.{h,m}'
   s.resources    = ['RCMessageKit/Resources/*.*', 'RCMessageKit/*.{xib}']
   s.requires_arc = true
+  s.ios.deployment_target  = '11.0'
 end
