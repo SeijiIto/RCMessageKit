@@ -11,17 +11,30 @@
 
 #import "RCBubbleHeaderCell.h"
 
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+@interface RCBubbleHeaderCell()
+{
+	NSIndexPath *indexPath;
+	RCMessagesView *messagesView;
+}
+@end
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+
 @implementation RCBubbleHeaderCell
 
 @synthesize labelBubbleHeader;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)bindData:(NSIndexPath *)indexPath messagesView:(RCMessagesView *)messagesView
+- (void)bindData:(NSIndexPath *)indexPath_ messagesView:(RCMessagesView *)messagesView_
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	self.backgroundColor = [UIColor clearColor];
+	indexPath = indexPath_; messagesView = messagesView_;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	RCMessage *rcmessage = [messagesView rcmessage:indexPath];
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	self.backgroundColor = [UIColor clearColor];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	if (labelBubbleHeader == nil)
 	{
@@ -41,7 +54,9 @@
 {
 	[super layoutSubviews];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	CGFloat width = SCREEN_WIDTH - [RCMessages bubbleHeaderLeft] - [RCMessages bubbleHeaderRight];
+	CGFloat widthTable = messagesView.tableView.frame.size.width;
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	CGFloat width = widthTable - [RCMessages bubbleHeaderLeft] - [RCMessages bubbleHeaderRight];
 	CGFloat height = (labelBubbleHeader.text != nil) ? [RCMessages bubbleHeaderHeight] : 0;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	labelBubbleHeader.frame = CGRectMake([RCMessages bubbleHeaderLeft], 0, width, height);

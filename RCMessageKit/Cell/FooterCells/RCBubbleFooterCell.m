@@ -11,17 +11,30 @@
 
 #import "RCBubbleFooterCell.h"
 
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+@interface RCBubbleFooterCell()
+{
+	NSIndexPath *indexPath;
+	RCMessagesView *messagesView;
+}
+@end
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+
 @implementation RCBubbleFooterCell
 
 @synthesize labelBubbleFooter;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)bindData:(NSIndexPath *)indexPath messagesView:(RCMessagesView *)messagesView
+- (void)bindData:(NSIndexPath *)indexPath_ messagesView:(RCMessagesView *)messagesView_
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	self.backgroundColor = [UIColor clearColor];
+	indexPath = indexPath_; messagesView = messagesView_;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	RCMessage *rcmessage = [messagesView rcmessage:indexPath];
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	self.backgroundColor = [UIColor clearColor];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	if (labelBubbleFooter == nil)
 	{
@@ -41,7 +54,9 @@
 {
 	[super layoutSubviews];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	CGFloat width = SCREEN_WIDTH - [RCMessages bubbleFooterLeft] - [RCMessages bubbleFooterRight];
+	CGFloat widthTable = messagesView.tableView.frame.size.width;
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	CGFloat width = widthTable - [RCMessages bubbleFooterLeft] - [RCMessages bubbleFooterRight];
 	CGFloat height = (labelBubbleFooter.text != nil) ? [RCMessages bubbleFooterHeight] : 0;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	labelBubbleFooter.frame = CGRectMake([RCMessages bubbleFooterLeft], 0, width, height);

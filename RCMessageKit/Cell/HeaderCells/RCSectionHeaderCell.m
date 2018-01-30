@@ -11,17 +11,30 @@
 
 #import "RCSectionHeaderCell.h"
 
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+@interface RCSectionHeaderCell()
+{
+	NSIndexPath *indexPath;
+	RCMessagesView *messagesView;
+}
+@end
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+
 @implementation RCSectionHeaderCell
 
 @synthesize labelSectionHeader;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)bindData:(NSIndexPath *)indexPath messagesView:(RCMessagesView *)messagesView
+- (void)bindData:(NSIndexPath *)indexPath_ messagesView:(RCMessagesView *)messagesView_
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	self.backgroundColor = [UIColor clearColor];
+	indexPath = indexPath_; messagesView = messagesView_;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	RCMessage *rcmessage = [messagesView rcmessage:indexPath];
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	self.backgroundColor = [UIColor clearColor];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	if (labelSectionHeader == nil)
 	{
@@ -41,7 +54,9 @@
 {
 	[super layoutSubviews];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	CGFloat width = SCREEN_WIDTH - [RCMessages sectionHeaderLeft] - [RCMessages sectionHeaderRight];
+	CGFloat widthTable = messagesView.tableView.frame.size.width;
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	CGFloat width = widthTable - [RCMessages sectionHeaderLeft] - [RCMessages sectionHeaderRight];
 	CGFloat height = (labelSectionHeader.text != nil) ? [RCMessages sectionHeaderHeight] : 0;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	labelSectionHeader.frame = CGRectMake([RCMessages sectionHeaderLeft], 0, width, height);

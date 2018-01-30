@@ -29,8 +29,7 @@
 - (void)bindData:(NSIndexPath *)indexPath_ messagesView:(RCMessagesView *)messagesView_
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	indexPath = indexPath_;
-	messagesView = messagesView_;
+	indexPath = indexPath_; messagesView = messagesView_;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	self.backgroundColor = [UIColor clearColor];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -82,14 +81,15 @@
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	RCMessage *rcmessage = [messagesView rcmessage:indexPath];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	CGFloat xBubble = rcmessage.incoming ? [RCMessages bubbleMarginLeft] : (SCREEN_WIDTH - [RCMessages bubbleMarginRight] - size.width);
+	CGFloat widthTable = messagesView.tableView.frame.size.width;
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	CGFloat xBubble = rcmessage.incoming ? [RCMessages bubbleMarginLeft] : (widthTable - [RCMessages bubbleMarginRight] - size.width);
 	viewBubble.frame = CGRectMake(xBubble, 0, size.width, size.height);
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	CGFloat diameter = [RCMessages avatarDiameter];
-	CGFloat xAvatar = rcmessage.incoming ? [RCMessages avatarMarginLeft] : (SCREEN_WIDTH - [RCMessages avatarMarginRight] - diameter);
+	CGFloat xAvatar = rcmessage.incoming ? [RCMessages avatarMarginLeft] : (widthTable - [RCMessages avatarMarginRight] - diameter);
 	imageAvatar.frame = CGRectMake(xAvatar, size.height - diameter, diameter, diameter);
 	labelAvatar.frame = CGRectMake(xAvatar, size.height - diameter, diameter, diameter);
-	//---------------------------------------------------------------------------------------------------------------------------------------------
 }
 
 #pragma mark - Gesture recognizer methods

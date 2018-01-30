@@ -29,7 +29,6 @@
 {
 	BOOL initialized;
 	CGPoint centerView;
-	CGFloat heightView;
 
 	NSTimer *timerAudio;
 	NSDate *dateAudioStart;
@@ -102,7 +101,6 @@
 	[super viewDidLayoutSubviews];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	centerView = self.view.center;
-	heightView = self.view.frame.size.height;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[self inputPanelUpdate];
 }
@@ -128,7 +126,6 @@
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	centerView = self.view.center;
-	heightView = self.view.frame.size.height;
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -321,6 +318,15 @@
 - (void)inputPanelUpdate
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	CGFloat heightView = self.view.frame.size.height;
+	CGFloat widthView = self.view.frame.size.width;
+	CGFloat leftSafe = self.view.safeAreaInsets.left;
+	CGFloat rightSafe = self.view.safeAreaInsets.right;
+	CGFloat bottomSafe = self.view.safeAreaInsets.bottom;
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
 	CGFloat widthText = textInput.frame.size.width, heightText;
 	CGSize sizeText = [textInput sizeThatFits:CGSizeMake(widthText, MAXFLOAT)];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -331,10 +337,10 @@
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	self.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, heightView - heightInput);
+	self.tableView.frame = CGRectMake(leftSafe, 0, widthView - leftSafe - rightSafe, heightView - bottomSafe - heightInput);
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	CGRect frameViewInput = viewInput.frame;
-	frameViewInput.origin.y = heightView - heightInput;
+	frameViewInput.origin.y = heightView - bottomSafe - heightInput;
 	frameViewInput.size.height = heightInput;
 	viewInput.frame = frameViewInput;
 	//---------------------------------------------------------------------------------------------------------------------------------------------

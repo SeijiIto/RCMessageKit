@@ -11,17 +11,30 @@
 
 #import "RCSectionFooterCell.h"
 
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+@interface RCSectionFooterCell()
+{
+	NSIndexPath *indexPath;
+	RCMessagesView *messagesView;
+}
+@end
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+
 @implementation RCSectionFooterCell
 
 @synthesize labelSectionFooter;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)bindData:(NSIndexPath *)indexPath messagesView:(RCMessagesView *)messagesView
+- (void)bindData:(NSIndexPath *)indexPath_ messagesView:(RCMessagesView *)messagesView_
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	self.backgroundColor = [UIColor clearColor];
+	indexPath = indexPath_; messagesView = messagesView_;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	RCMessage *rcmessage = [messagesView rcmessage:indexPath];
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	self.backgroundColor = [UIColor clearColor];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	if (labelSectionFooter == nil)
 	{
@@ -41,7 +54,9 @@
 {
 	[super layoutSubviews];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	CGFloat width = SCREEN_WIDTH - [RCMessages sectionFooterLeft] - [RCMessages sectionFooterRight];
+	CGFloat widthTable = messagesView.tableView.frame.size.width;
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	CGFloat width = widthTable - [RCMessages sectionFooterLeft] - [RCMessages sectionFooterRight];
 	CGFloat height = (labelSectionFooter.text != nil) ? [RCMessages sectionFooterHeight] : 0;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	labelSectionFooter.frame = CGRectMake([RCMessages sectionFooterLeft], 0, width, height);

@@ -29,14 +29,13 @@
 - (void)bindData:(NSIndexPath *)indexPath_ messagesView:(RCMessagesView *)messagesView_
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	indexPath = indexPath_;
-	messagesView = messagesView_;
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	self.backgroundColor = [UIColor clearColor];
+	indexPath = indexPath_; messagesView = messagesView_;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	RCMessage *rcmessage = [messagesView rcmessage:indexPath];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	self.backgroundColor = [UIColor clearColor];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	if (viewBubble == nil)
 	{
@@ -76,10 +75,12 @@
 {
 	[super layoutSubviews];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
+	CGFloat widthTable = messagesView.tableView.frame.size.width;
+	//---------------------------------------------------------------------------------------------------------------------------------------------
 	CGSize size = [RCStatusCell size:indexPath messagesView:messagesView];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	CGFloat yBubble = [RCMessages sectionHeaderMargin];
-	CGFloat xBubble = (SCREEN_WIDTH - size.width) / 2;
+	CGFloat xBubble = (widthTable - size.width) / 2;
 	viewBubble.frame = CGRectMake(xBubble, yBubble, size.width, size.height);
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	textView.frame = CGRectMake(0, 0, size.width, size.height);
@@ -102,7 +103,9 @@
 {
 	RCMessage *rcmessage = [messagesView rcmessage:indexPath];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	CGFloat maxwidth = (0.95 * SCREEN_WIDTH) - [RCMessages statusInsetLeft] - [RCMessages statusInsetRight];
+	CGFloat widthTable = messagesView.tableView.frame.size.width;
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	CGFloat maxwidth = (0.95 * widthTable) - [RCMessages statusInsetLeft] - [RCMessages statusInsetRight];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	CGRect rect = [rcmessage.text boundingRectWithSize:CGSizeMake(maxwidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin
 											attributes:@{NSFontAttributeName:[RCMessages statusFont]} context:nil];

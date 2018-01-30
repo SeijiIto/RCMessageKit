@@ -28,8 +28,7 @@
 - (void)bindData:(NSIndexPath *)indexPath_ messagesView:(RCMessagesView *)messagesView_
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	indexPath = indexPath_;
-	messagesView = messagesView_;
+	indexPath = indexPath_; messagesView = messagesView_;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	RCMessage *rcmessage = [messagesView rcmessage:indexPath];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -88,7 +87,9 @@
 {
 	RCMessage *rcmessage = [messagesView rcmessage:indexPath];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	CGFloat maxwidth = (0.6 * SCREEN_WIDTH) - [RCMessages emojiInsetLeft] - [RCMessages emojiInsetRight];
+	CGFloat widthTable = messagesView.tableView.frame.size.width;
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	CGFloat maxwidth = (0.6 * widthTable) - [RCMessages emojiInsetLeft] - [RCMessages emojiInsetRight];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	CGRect rect = [rcmessage.text boundingRectWithSize:CGSizeMake(maxwidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin
 											attributes:@{NSFontAttributeName:[RCMessages emojiFont]} context:nil];
