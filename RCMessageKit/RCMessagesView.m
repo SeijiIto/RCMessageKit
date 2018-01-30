@@ -321,9 +321,15 @@
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	CGFloat heightView = self.view.frame.size.height;
 	CGFloat widthView = self.view.frame.size.width;
-	CGFloat leftSafe = self.view.safeAreaInsets.left;
-	CGFloat rightSafe = self.view.safeAreaInsets.right;
-	CGFloat bottomSafe = self.view.safeAreaInsets.bottom;
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	CGFloat leftSafe = 0, rightSafe = 0, bottomSafe = 0;
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	if (@available(iOS 11, *))
+	{
+		leftSafe = self.view.safeAreaInsets.left;
+		rightSafe = self.view.safeAreaInsets.right;
+		bottomSafe = self.view.safeAreaInsets.bottom;
+	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
