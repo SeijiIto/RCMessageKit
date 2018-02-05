@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -33,8 +32,9 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" bouncesZoom="NO" style="plain" separatorStyle="none" allowsSelection="NO" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i5M-Pr-FkT">
+                <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" bouncesZoom="NO" style="plain" separatorStyle="none" allowsSelection="NO" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i5M-Pr-FkT">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="Tng-2m-Rnh"/>
@@ -131,14 +131,9 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="WF4-Ti-KqT" firstAttribute="leading" secondItem="PpO-Gc-0B7" secondAttribute="leading" constant="44" id="4hm-QC-0eZ"/>
-                <constraint firstAttribute="trailing" secondItem="xuU-RB-86v" secondAttribute="trailing" id="H1D-Pa-OaA"/>
-                <constraint firstItem="xuU-RB-86v" firstAttribute="leading" secondItem="PpO-Gc-0B7" secondAttribute="leading" id="P6d-Se-fzz"/>
-                <constraint firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" constant="44" id="Wbo-3u-eNh"/>
-                <constraint firstAttribute="bottom" secondItem="xuU-RB-86v" secondAttribute="bottom" id="aPS-B4-W7b"/>
-                <constraint firstItem="i5M-Pr-FkT" firstAttribute="top" secondItem="PpO-Gc-0B7" secondAttribute="top" id="bn0-oS-5Q0"/>
-                <constraint firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="ivS-wA-vbN"/>
-                <constraint firstItem="i5M-Pr-FkT" firstAttribute="leading" secondItem="PpO-Gc-0B7" secondAttribute="leading" id="pI8-fN-4he"/>
+                <constraint firstAttribute="bottom" secondItem="xuU-RB-86v" secondAttribute="bottom" id="6Vs-HE-A35"/>
+                <constraint firstAttribute="trailing" secondItem="xuU-RB-86v" secondAttribute="trailing" id="dpg-yT-T03"/>
+                <constraint firstItem="xuU-RB-86v" firstAttribute="leading" secondItem="PpO-Gc-0B7" secondAttribute="leading" id="l3v-PA-2iO"/>
             </constraints>
             <point key="canvasLocation" x="170" y="854"/>
         </view>
@@ -220,9 +215,4 @@
         <image name="rcmessage_audio.png" width="22" height="22"/>
         <image name="rcmessage_send.png" width="22" height="22"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_0.fullscreen"/>
-    </simulatedMetricsContainer>
 </document>

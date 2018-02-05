@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2017 Related Code - http://relatedcode.com
+// Copyright (c) 2018 Related Code - http://relatedcode.com
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -69,13 +69,14 @@
 	[self.tableView registerClass:[RCBubbleFooterCell class] forCellReuseIdentifier:@"RCBubbleFooterCell"];
 	[self.tableView registerClass:[RCSectionFooterCell class] forCellReuseIdentifier:@"RCSectionFooterCell"];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	[self.tableView registerClass:[RCStatusCell class] forCellReuseIdentifier:@"RCStatusCell"];
 	[self.tableView registerClass:[RCTextMessageCell class] forCellReuseIdentifier:@"RCTextMessageCell"];
 	[self.tableView registerClass:[RCEmojiMessageCell class] forCellReuseIdentifier:@"RCEmojiMessageCell"];
 	[self.tableView registerClass:[RCPictureMessageCell class] forCellReuseIdentifier:@"RCPictureMessageCell"];
 	[self.tableView registerClass:[RCVideoMessageCell class] forCellReuseIdentifier:@"RCVideoMessageCell"];
 	[self.tableView registerClass:[RCAudioMessageCell class] forCellReuseIdentifier:@"RCAudioMessageCell"];
 	[self.tableView registerClass:[RCLocationMessageCell class] forCellReuseIdentifier:@"RCLocationMessageCell"];
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	[self.tableView registerClass:[RCStatusCell class] forCellReuseIdentifier:@"RCStatusCell"];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	self.tableView.tableHeaderView = viewLoadEarlier;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -267,7 +268,7 @@
 	CGFloat heightKeyboard = keyboard.size.height;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-		self.view.center = CGPointMake(centerView.x, centerView.y - heightKeyboard);
+		self.view.center = CGPointMake(centerView.x, centerView.y - heightKeyboard + self.view.safeAreaInsets.bottom);
 	} completion:nil];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[[UIMenuController sharedMenuController] setMenuItems:nil];
@@ -322,14 +323,9 @@
 	CGFloat heightView = self.view.frame.size.height;
 	CGFloat widthView = self.view.frame.size.width;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	CGFloat leftSafe = 0, rightSafe = 0, bottomSafe = 0;
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	if (@available(iOS 11, *))
-	{
-		leftSafe = self.view.safeAreaInsets.left;
-		rightSafe = self.view.safeAreaInsets.right;
-		bottomSafe = self.view.safeAreaInsets.bottom;
-	}
+	CGFloat leftSafe = self.view.safeAreaInsets.left;
+	CGFloat rightSafe = self.view.safeAreaInsets.right;
+	CGFloat bottomSafe = self.view.safeAreaInsets.bottom;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
