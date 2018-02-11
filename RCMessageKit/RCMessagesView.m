@@ -29,11 +29,6 @@
 {
 	BOOL initialized;
 	CGPoint centerView;
-
-	NSTimer *timerAudio;
-	NSDate *dateAudioStart;
-	CGPoint pointAudioStart;
-	AVAudioRecorder *audioRecorder;
 }
 @end
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -43,7 +38,7 @@
 @synthesize viewTitle, labelTitle1, labelTitle2, buttonTitle;
 @synthesize viewLoadEarlier;
 @synthesize viewTypingIndicator;
-@synthesize viewInput, buttonInputAttach, buttonInputAudio, buttonInputSend, textInput, viewInputAudio, labelInputAudio;
+@synthesize viewInput, buttonInputAttach, textInput, buttonInputSend;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 - (id)init
@@ -84,13 +79,6 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardDidShowNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardDidHideNotification object:nil];
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	UILongPressGestureRecognizer *gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(audioRecorderGesture:)];
-	gesture.minimumPressDuration = 0;
-	gesture.cancelsTouchesInView = NO;
-	[buttonInputAudio addGestureRecognizer:gesture];
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	viewInputAudio.hidden = YES;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[self inputPanelInit];
 }
@@ -358,16 +346,11 @@
 	frameTextInput.size.height = heightText;
 	textInput.frame = frameTextInput;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	CGRect frameAudio = buttonInputAudio.frame;
-	frameAudio.origin.y = heightInput - frameAudio.size.height;
-	buttonInputAudio.frame = frameAudio;
-	//---------------------------------------------------------------------------------------------------------------------------------------------
 	CGRect frameSend = buttonInputSend.frame;
 	frameSend.origin.y = heightInput - frameSend.size.height;
 	buttonInputSend.frame = frameSend;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	buttonInputAudio.hidden = ([textInput.text length] != 0);
-	buttonInputSend.hidden = ([textInput.text length] == 0);
+	buttonInputSend.enabled = ([textInput.text length] != 0);
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -451,13 +434,6 @@
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 - (void)actionAttachMessage
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-{
-	
-}
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)actionSendAudio:(NSString *)path
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	
@@ -672,106 +648,6 @@
 {
 	[self inputPanelUpdate];
 	[self typingIndicatorUpdate];
-}
-
-#pragma mark - Audio recorder methods
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)audioRecorderGesture:(UILongPressGestureRecognizer *)gestureRecognizer
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-{
-	switch (gestureRecognizer.state)
-	{
-		case UIGestureRecognizerStateBegan:
-		{
-			pointAudioStart = [gestureRecognizer locationInView:self.view];
-			[self audioRecorderInit];
-			[self audioRecorderStart];
-			break;
-		}
-		case UIGestureRecognizerStateChanged:
-		{
-			break;
-		}
-		case UIGestureRecognizerStateEnded:
-		{
-			CGPoint pointAudioStop = [gestureRecognizer locationInView:self.view];
-			CGFloat distanceAudio = sqrtf(powf(pointAudioStop.x - pointAudioStart.x, 2) + pow(pointAudioStop.y - pointAudioStart.y, 2));
-			[self audioRecorderStop:(distanceAudio < 50)];
-			break;
-		}
-		case UIGestureRecognizerStatePossible:
-		case UIGestureRecognizerStateCancelled:
-		case UIGestureRecognizerStateFailed:
-			break;
-	}
-}
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)audioRecorderInit
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-{
-	NSString *dir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
-	NSString *path = [dir stringByAppendingPathComponent:@"audiorecorder.m4a"];
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	AVAudioSession *session = [AVAudioSession sharedInstance];
-	[session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:nil];
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	NSMutableDictionary *settings = [[NSMutableDictionary alloc] init];
-	settings[AVFormatIDKey] = @(kAudioFormatMPEG4AAC);
-	settings[AVSampleRateKey] = @(44100);
-	settings[AVNumberOfChannelsKey] = @(2);
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	audioRecorder = [[AVAudioRecorder alloc] initWithURL:[NSURL fileURLWithPath:path] settings:settings error:nil];
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	audioRecorder.meteringEnabled = YES;
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	[audioRecorder prepareToRecord];
-}
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)audioRecorderStart
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-{
-	[audioRecorder record];
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	dateAudioStart = [NSDate date];
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	timerAudio = [NSTimer scheduledTimerWithTimeInterval:0.07 target:self selector:@selector(audioRecorderUpdate) userInfo:nil repeats:YES];
-	[[NSRunLoop mainRunLoop] addTimer:timerAudio forMode:NSRunLoopCommonModes];
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	[self audioRecorderUpdate];
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	viewInputAudio.hidden = NO;
-}
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)audioRecorderStop:(BOOL)sending
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-{
-	[audioRecorder stop];
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	[timerAudio invalidate]; timerAudio = nil;
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	if ((sending) && ([[NSDate date] timeIntervalSinceDate:dateAudioStart] >= 1))
-	{
-		[self dismissKeyboard];
-		[self actionSendAudio:audioRecorder.url.path];
-	}
-	else [audioRecorder deleteRecording];
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	viewInputAudio.hidden = YES;
-}
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)audioRecorderUpdate
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-{
-	NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:dateAudioStart];
-	int millisec = (int) (interval * 100) % 100;
-	int seconds = (int) interval % 60;
-	int minutes = (int) interval / 60;
-	labelInputAudio.text = [NSString stringWithFormat:@"%01d:%02d,%02d", minutes, seconds, millisec];
 }
 
 @end
