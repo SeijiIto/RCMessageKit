@@ -40,8 +40,8 @@ You can check the demo app here: [Messenger](https://github.com/relatedcode/Mess
 
 ## REQUIREMENTS
 
-- Xcode 8
-- iOS 9.3
+- Xcode 9
+- iOS 11.0
 - ARC
 
 ---
