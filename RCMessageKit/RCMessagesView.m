@@ -256,7 +256,7 @@
 	CGFloat heightKeyboard = keyboard.size.height;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-		self.view.center = CGPointMake(centerView.x, centerView.y - heightKeyboard + self.view.safeAreaInsets.bottom);
+		self.view.center = CGPointMake(self->centerView.x, self->centerView.y - heightKeyboard + self.view.safeAreaInsets.bottom);
 	} completion:nil];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[[UIMenuController sharedMenuController] setMenuItems:nil];
@@ -270,7 +270,7 @@
 	NSTimeInterval duration = [[info valueForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-		self.view.center = centerView;
+		self.view.center = self->centerView;
 	} completion:nil];
 }
 
